@@ -1,14 +1,9 @@
-/* App-local styles. Mesh chrome (settings drawer, self-ref bar) is provided by
- * @baditaflorin/mesh-common/styles.css imported in main.tsx. */
-
 :root {
   color-scheme: dark;
 }
-
 * {
   box-sizing: border-box;
 }
-
 html,
 body,
 #root {
@@ -20,32 +15,133 @@ body,
   color: var(--mesh-fg);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   -webkit-tap-highlight-color: transparent;
+  transition: background 100ms;
+}
+html[data-mesh-flash="1"],
+html[data-mesh-flash="1"] body {
+  background: var(--mesh-accent) !important;
 }
 
-.feature-placeholder {
-  padding: 6rem 1.5rem 2rem;
-  text-align: center;
+.bell-screen {
+  padding: 4rem 1rem 5rem;
+  max-width: 32rem;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
 }
-
-.feature-placeholder h1 {
-  font-size: 1.6rem;
+.bell-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.bell-header h1 {
   margin: 0;
   color: var(--mesh-accent);
+  font-size: 1.5rem;
 }
 
-.feature-placeholder p {
-  max-width: 32rem;
-  margin: 0;
-  opacity: 0.85;
-  line-height: 1.5;
+.bell-role-switch {
+  display: flex;
+  gap: 0.3rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.3rem;
+  border-radius: 999px;
 }
-
-.feature-status {
+.bell-role-switch button {
+  background: transparent;
+  color: var(--mesh-muted);
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
   font-size: 0.85rem;
-  opacity: 0.6;
+}
+.bell-role-switch button.is-active {
+  background: var(--mesh-accent);
+  color: #0b0a06;
+  font-weight: 600;
+}
+
+.bell-name {
+  width: min(280px, 90%);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--mesh-fg);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 1rem;
+}
+.bell-ring {
+  width: min(280px, 80vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--mesh-accent);
+  color: #0b0a06;
+  border: none;
+  font-size: clamp(1.5rem, 7vw, 2.5rem);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 0 60px color-mix(in srgb, var(--mesh-accent) 70%, transparent);
+  margin: 2rem 0;
+}
+.bell-ring:active {
+  transform: scale(0.95);
+}
+
+.bell-help {
+  text-align: center;
+  color: var(--mesh-muted);
+  font-size: 0.85rem;
+  max-width: 28rem;
+}
+
+.bell-arm {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--mesh-fg);
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.bell-armed {
+  color: var(--mesh-accent);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.bell-log {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.bell-log li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+}
+.bell-log-name {
+  font-weight: 500;
+}
+.bell-log-time {
+  color: var(--mesh-muted);
   font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+}
+.bell-empty {
+  text-align: center;
+  color: var(--mesh-muted);
+  font-style: italic;
+  padding: 1rem 0;
 }
