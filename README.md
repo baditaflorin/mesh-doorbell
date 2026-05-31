@@ -1,7 +1,7 @@
 # mesh-doorbell
 
 [![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-doorbell-2cb67d)](https://baditaflorin.github.io/mesh-doorbell/)
-[![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/baditaflorin/mesh-doorbell/blob/main/package.json)
+[![version](https://img.shields.io/badge/version-0.1.1-blue)](https://github.com/baditaflorin/mesh-doorbell/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
 > Print a QR sticker for your door — friend scans it, your phone rings
