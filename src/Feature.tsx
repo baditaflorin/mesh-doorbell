@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { MeshConfig, YRoom } from "@baditaflorin/mesh-common";
+import { useTone } from "@baditaflorin/mesh-common";
 
 type Props = { room: YRoom | null; config: MeshConfig };
 
@@ -30,7 +31,7 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   );
   const [armed, setArmed] = useState(false);
   const [, rerender] = useState(0);
-  const audioRef = useRef<AudioContext | null>(null);
+  const tone = useTone();
   const seenRingsRef = useRef<Set<string>>(new Set());
   const flashRef = useRef<number | null>(null);
 
@@ -61,25 +62,11 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
   }, [room, role, armed]);
 
   function ringChime() {
-    try {
-      audioRef.current ??= new AudioContext();
-      const ctx = audioRef.current;
-      const start = ctx.currentTime;
-      [0, 0.18, 0.36].forEach((dt, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.connect(g).connect(ctx.destination);
-        o.frequency.value = i === 1 ? 660 : 880;
-        const at = start + dt;
-        g.gain.setValueAtTime(0.0001, at);
-        g.gain.exponentialRampToValueAtTime(0.5, at + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, at + 0.15);
-        o.start(at);
-        o.stop(at + 0.2);
-      });
-    } catch {
-      // ignored
-    }
+    tone.sequence([
+      { freq: 880, at: 0, gain: 0.5, attack: 0.02 },
+      { freq: 660, at: 0.18, gain: 0.5, attack: 0.02 },
+      { freq: 880, at: 0.36, gain: 0.5, attack: 0.02 },
+    ]);
   }
 
   function flashScreen() {
@@ -148,11 +135,7 @@ function Body({ room, config }: { room: YRoom; config: MeshConfig }) {
               className="bell-arm"
               onClick={() => {
                 setArmed(true);
-                try {
-                  audioRef.current = new AudioContext();
-                } catch {
-                  // ignore
-                }
+                void tone.resume();
               }}
             >
               arm (one tap to enable sound)
